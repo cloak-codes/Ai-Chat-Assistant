@@ -13,6 +13,7 @@ body {
 .container {
   display: flex;
   height: 100vh;
+  position: relative;
 }
 
 .sidebar {
@@ -23,6 +24,57 @@ body {
   display: flex;
   flex-direction: column;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-sidebar {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1001;
+  background: #2c2c2c;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.sidebar-overlay {
+  display: none;
 }
 
 .sidebar h2 {
@@ -52,6 +104,8 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
 }
 
 .messages {
@@ -125,4 +179,125 @@ body {
 .inputArea button:disabled {
   background: #6c757d;
   cursor: not-allowed;
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .container {
+    display: flex;
+  }
+
+  .sidebar {
+    position: static;
+    transform: translateX(0);
+    width: 250px;
+  }
+
+  .chat {
+    flex: 1;
+    margin-left: 0;
+  }
+
+  .menu-toggle,
+  .close-sidebar,
+  .sidebar-overlay {
+    display: none;
+  }
+
+  .sidebar-header {
+    justify-content: center;
+  }
+
+  .sidebar-header h2 {
+    margin: 0;
+  }
+
+  .messages {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px;
+  }
+
+  .chat {
+    margin-left: 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  .messages {
+    padding: 15px;
+    padding-top: 60px; /* Account for menu button */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  .message {
+    max-width: 85%;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  .inputArea {
+    padding: 15px;
+    flex-direction: row;
+  }
+
+  .inputArea input {
+    margin-right: 12px;
+    margin-bottom: 0;
+  }
+
+  .inputArea button {
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+  }
+
+  .messages {
+    padding: 10px;
+    padding-top: 60px;
+    gap: 12px;
+  }
+
+  .message {
+    max-width: 90%;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .inputArea {
+    padding: 10px;
+    flex-direction: row;
+  }
+
+  .inputArea input {
+    padding: 14px 16px;
+    font-size: 16px; /* Prevent zoom on iOS */
+    margin-right: 12px;
+  }
+
+  .inputArea button {
+    padding: 14px 20px;
+    font-size: 16px;
+    min-height: 48px; /* Touch target size */
+  }
 }

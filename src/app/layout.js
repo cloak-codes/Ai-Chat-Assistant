@@ -12,9 +12,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Ai Chat Assistant",
+  title: "cloak AI Assistant",
   description: "Your Ai Chat Assistant built with Next.js and Groq API",
 };
+
+export const viewport =
+  "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no";
 
 export default function RootLayout({ children }) {
   return (

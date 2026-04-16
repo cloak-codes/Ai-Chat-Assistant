@@ -6,6 +6,7 @@ export default function Home() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
@@ -88,12 +89,21 @@ export default function Home() {
 
   return (
     <div className="container">
-      <aside className="sidebar">
-        <h2>AI Chat</h2>
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+        <div className="sidebar-header">
+          <h2>cloak AI</h2>
+          <button
+            className="close-sidebar"
+            onClick={() => setSidebarOpen(false)}
+          >
+            ✕
+          </button>
+        </div>
         <button
           onClick={() => {
             setMessages([]);
             localStorage.removeItem("chat_history");
+            setSidebarOpen(false);
           }}
         >
           New Chat
@@ -101,6 +111,10 @@ export default function Home() {
       </aside>
 
       <main className="chat">
+        <button className="menu-toggle" onClick={() => setSidebarOpen(true)}>
+          ☰
+        </button>
+
         <div className="messages">
           {messages.map((msg, i) => (
             <div key={i} className={`message ${msg.role}`}>
@@ -122,6 +136,13 @@ export default function Home() {
           </button>
         </div>
       </main>
+
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
     </div>
   );
 }
